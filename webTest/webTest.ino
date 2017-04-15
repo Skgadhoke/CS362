@@ -25,7 +25,7 @@
 byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
-IPAddress ip(192, 168, 1, 177);
+IPAddress ip(192, 168, 1, 105);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -50,6 +50,7 @@ void setup() {
 
 void loop() {
   // listen for incoming clients
+//  Serial.println(analogRead(A0));
   EthernetClient client = server.available();
   if (client) {
     Serial.println("new client");
@@ -72,14 +73,14 @@ void loop() {
           client.println("<!DOCTYPE HTML>");
           client.println("<html>");
           // output the value of each analog input pin
-          for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
-            int sensorReading = analogRead(analogChannel);
-            client.print("analog input ");
-            client.print(analogChannel);
-            client.print(" is ");
-            client.print(sensorReading);
+//          for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
+//            int sensorReading = analogRead(analogChannel);
+            client.print("PhotoResistor Value input ");
+            client.print(analogRead(A0));
+//            client.print(" is ");
+//            client.print(sensorReading);
             client.println("<br />");
-          }
+//          }
           client.println("</html>");
           break;
         }

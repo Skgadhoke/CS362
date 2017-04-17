@@ -2,7 +2,7 @@
 #include <Wire.h>
 
 #define PAYLOAD_SIZE 2   // how many bytes we are sending over the wire
-#define NODE_MAX 5       // number of ardunios
+#define NODE_MAX 6       // number of ardunios
 #define START_NODE 2     // starting I2C address for the slave nodes
 #define DELAY 100        // delay between reads, between I2C nodes
 
@@ -19,7 +19,7 @@ void loop() {
   for(int addr = 2; addr <= NODE_MAX; addr++)
   {
      Wire.requestFrom(addr, PAYLOAD_SIZE);   
-     
+     //Serial.println("ADDRESS: " + String(addr));
      if(Wire.available() ==  PAYLOAD_SIZE)
      {
         for(int i=0; i<PAYLOAD_SIZE; i++){
@@ -27,7 +27,7 @@ void loop() {
           nodeInfo[i] = nodeInfo[i] * 4.0;
         }
         for(int j=0; j<PAYLOAD_SIZE; j++)
-          Serial.println("Slave:" + String(addr) + " Data: " + String(nodeInfo[j]));
+          //Serial.println("Slave:" + String(addr) + " Data: " + String(nodeInfo[j]));
      }
   }
   delay(DELAY);

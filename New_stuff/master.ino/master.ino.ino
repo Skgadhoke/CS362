@@ -24,10 +24,18 @@ void loop() {
      {
         for(int i=0; i<PAYLOAD_SIZE; i++){
           nodeInfo[i] = Wire.read();
-          nodeInfo[i] = nodeInfo[i] * 4.0;
+          if(i % 2 != 0)
+            nodeInfo[i] = nodeInfo[i] * 4.0;
+          else
+            nodeInfo[i] = nodeInfo[i];
+
         }
-        for(int j=0; j<PAYLOAD_SIZE; j++)
-          //Serial.println("Slave:" + String(addr) + " Data: " + String(nodeInfo[j]));
+        for(int j=0; j<PAYLOAD_SIZE; j++){
+          if(j % 2 != 0){
+            Serial.println("Slave:" + String(addr) + " Data: " + String(nodeInfo[j]));
+          }
+        }
+        
      }
   }
   delay(DELAY);

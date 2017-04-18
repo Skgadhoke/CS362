@@ -7,10 +7,12 @@
 
 #define COMMON_ANODE
 
-int redPin = 11;
-int greenPin = 10;
-int bluePin = 9;
+int redPin = 3;
+int greenPin = 5;
+int bluePin = 6;
 
+
+bool calibrate = false;
 
 byte nodePayload[PAYLOAD_SIZE];
 
@@ -60,18 +62,11 @@ float getDistance()
 
 void LED_CODE()
 {
-  setColor(255, 0, 0);  // red
-  delay(100);
-  setColor(0, 255, 0);  // green
-  delay(100);
-  setColor(0, 0, 255);  // blue
-  delay(100);
-  setColor(255, 255, 0);  // yellow
-  delay(100);  
-  setColor(80, 0, 80);  // purple
-  delay(100);
+ //setColor(0, 255, 0);  // green
+  // setColor(255, 0, 0);  // red
+ //setColor(80, 0, 80);  // purple
+  //setColor(200, 100, 0);  // yellow
   setColor(0, 255, 255);  // aqua
-  delay(100);
 }
 
 void setColor(int red, int green, int blue)

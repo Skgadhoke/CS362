@@ -9,10 +9,12 @@
 
 byte nodePayload[PAYLOAD_SIZE];
 
+int redPin = 6;
+int greenPin = 5;
+int bluePin = 3;
 
-int redPin = 11;
-int greenPin = 10;
-int bluePin = 9;
+bool calibrate = true;
+float initVal;
 
 // FLEX SENSOR VARIABLES 
 const int FLEX_PIN = A0; // Pin connected to voltage divider output
@@ -41,12 +43,20 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  //delay(100);
   nodePayload[0] = NODE_ADDRESS;
   float angle = calculateAngle();
   nodePayload[1] = angle/4.0;
 
-  LED_CODE();
+  if(calibrate)
+  {
+    initVal = nodePayload[1] * 4.0;
+    calibrate = false;
+  }
+  else
+  {
+    LED_CODE();
+  }
+ 
 }
 
 float calculateAngle()
@@ -66,18 +76,12 @@ float calculateAngle()
 
 void LED_CODE()
 {
-  setColor(255, 0, 0);  // red
-  delay(100);
-  setColor(0, 255, 0);  // green
-  delay(100);
-  setColor(0, 0, 255);  // blue
-  delay(100);
-  setColor(255, 255, 0);  // yellow
-  delay(100);  
-  setColor(80, 0, 80);  // purple
-  delay(100);
-  setColor(0, 255, 255);  // aqua
-  delay(100);
+float currVal = nodePayload[1] * 4.0;
+  
+  if(currVal-8 <= initVal && currVal+8 >= initVal)
+     setColor(0, 255, 255);  // aqua
+  else    
+     setColor(255, 0, 0);  // red 
 }
 
 void setColor(int red, int green, int blue)
@@ -87,6 +91,7 @@ void setColor(int red, int green, int blue)
     green = 255 - green;
     blue = 255 - blue;
   #endif
+  
   analogWrite(redPin, red);
   analogWrite(greenPin, green);
   analogWrite(bluePin, blue);  
